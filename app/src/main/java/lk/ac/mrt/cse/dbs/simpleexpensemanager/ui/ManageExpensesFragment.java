@@ -104,7 +104,7 @@ public class ManageExpensesFragment extends Fragment implements View.OnClickList
                 if (currentExpenseManager != null) {
                     try {
                         currentExpenseManager.updateAccountBalance(selectedAccount, day, month, year,
-                                ExpenseType.valueOf(type.toUpperCase()), amountStr);
+                                ExpenseType.valueOf(type.toUpperCase()).toString(), amountStr);
                     } catch (InvalidAccountException e) {
                         new AlertDialog.Builder(this.getActivity())
                                 .setTitle(this.getString(R.string.msg_account_update_unable) + selectedAccount)
