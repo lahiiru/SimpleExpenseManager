@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "expense_db";
+    public static final String DATABASE_NAME = "130683X";
     public static final String ACCOUNTS_TABLE_NAME = "account";
     public static final String ACCOUNTS_COLUMN_ACCNO = "accountNo";
     public static final String ACCOUNTS_COLUMN_BANK = "bankName";
@@ -121,6 +121,20 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<Transaction> array_list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from "+TRANSACTIONS_TABLE_NAME, null );
+        res.moveToFirst();
+
+        while(!res.isAfterLast()){
+            array_list.add(new Transaction(res.getString(3),res.getString(0),res.getString(1),res.getDouble(2)));
+            res.moveToNext();
+        }
+        return array_list;
+    }
+
+    public ArrayList<Transaction> getAllTransactionsLimit(int limit)
+    {
+        ArrayList<Transaction> array_list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from "+TRANSACTIONS_TABLE_NAME+" limit "+limit, null );
         res.moveToFirst();
 
         while(!res.isAfterLast()){

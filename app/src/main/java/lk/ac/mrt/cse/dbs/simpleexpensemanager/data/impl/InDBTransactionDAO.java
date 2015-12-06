@@ -1,15 +1,13 @@
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.TransactionDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.DBHelper;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 
 /**
- * Created by Lahiru on 06/12/2015.
+ * Created by Lahiru on 06/12/2015.:)
  */
 public class InDBTransactionDAO implements TransactionDAO {
     private final DBHelper dbhelper;
@@ -30,6 +28,6 @@ public class InDBTransactionDAO implements TransactionDAO {
 
     @Override
     public List<Transaction> getPaginatedTransactionLogs(int limit) {
-        return dbhelper.getAllTransactions();
+        return dbhelper.getAllTransactionsLimit(limit);
     }
 }
