@@ -2,7 +2,6 @@ package lk.ac.mrt.cse.dbs.simpleexpensemanager.control;
 
 import android.content.Context;
 
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.exception.ExpenseManagerException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.AccountDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.TransactionDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.InDBAccountDAO;
@@ -10,10 +9,8 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.InDBTransactionDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.DBHelper;
 
-import static android.database.sqlite.SQLiteDatabase.*;
-
 /**
- * Created by Lahiru on 06/12/2015.
+ * Created by Lahiru on 06/12/2015.:)
  */
 public class InDBDemoExpenseManager extends ExpenseManager {
     private final Context context;
@@ -24,7 +21,7 @@ public class InDBDemoExpenseManager extends ExpenseManager {
     }
     @Override
     public void setup() {
-        /*** Begin generating dummy data for In-Memory implementation ***/
+        /*** Begin generating dummy data for In-DB implementation ***/
         DBHelper dbhelper=new DBHelper(this.context);
 
         TransactionDAO InDBTransactionDAO = new InDBTransactionDAO(dbhelper);

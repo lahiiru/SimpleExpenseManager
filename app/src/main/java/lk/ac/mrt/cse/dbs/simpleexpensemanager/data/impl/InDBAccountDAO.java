@@ -1,17 +1,13 @@
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl;
-
-import android.content.Context;
-
 import java.util.List;
 
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.AccountDAO;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.DBHelper;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 
 /**
- * Created by Lahiru on 06/12/2015.
+ * Created by Lahiru on 06/12/2015.:)
  */
 public class InDBAccountDAO implements AccountDAO {
     private final DBHelper dbhelper;
@@ -50,7 +46,6 @@ public class InDBAccountDAO implements AccountDAO {
             String msg = "Account " + accountNo + " is invalid.";
             throw new InvalidAccountException(msg);
         }
-        // specific implementation based on the transaction type
         switch (expenseType) {
             case "EXPENSE":
                 dbhelper.updateBalance(accountNo,amount,true);

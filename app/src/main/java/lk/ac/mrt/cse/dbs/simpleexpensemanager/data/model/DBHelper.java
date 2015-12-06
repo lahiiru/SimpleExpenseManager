@@ -1,25 +1,18 @@
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model;
 
 /**
- * Created by Lahiru on 06/12/2015.
+ * Created by Lahiru on 06/12/2015.:)
  */
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Debug;
-import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "expense_db";
-
     public static final String ACCOUNTS_TABLE_NAME = "account";
     public static final String ACCOUNTS_COLUMN_ACCNO = "accountNo";
     public static final String ACCOUNTS_COLUMN_BANK = "bankName";
@@ -31,9 +24,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TRANSACTIONS_COLUMN_TYPE = "expenseType";
     public static final String TRANSACTIONS_COLUMN_AMOUNT = "amount";
     public static final String TRANSACTIONS_COLUMN_DATE = "date";
-    public static final String TRANSACTIONS_COLUMN_TRANSACTIONID = "id";
-
-    private HashMap hp;
 
     public DBHelper(Context context)
     {
@@ -42,7 +32,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO Auto-generated method stub
         String accountCreateQuery=
         "CREATE TABLE IF NOT EXISTS `"+ACCOUNTS_TABLE_NAME+"` ("+
         " `accountNo` varchar(10) NOT NULL,"+
@@ -57,8 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
         " `accountNo` varchar(10) NOT NULL,"+
         " `expenseType` varchar(10) NOT NULL,"+
         " `amount` decimal(10,2) NOT NULL,"+
-        " `date` varchar(15) NOT NULL,"+
-        " `id` INTEGER PRIMARY KEY AUTOINCREMENT"+
+        " `date` varchar(15) NOT NULL"+
         ");";
 
         db.execSQL(accountCreateQuery);
@@ -67,7 +55,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS "+ACCOUNTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+TRANSACTIONS_TABLE_NAME);
         onCreate(db);
@@ -92,9 +79,8 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(TRANSACTIONS_COLUMN_DATE, tc.getDate());
         contentValues.put(TRANSACTIONS_COLUMN_ACCNO, tc.getAccountNo());
-        contentValues.put(TRANSACTIONS_COLUMN_TYPE, tc.getExpenseType().toString());
+        contentValues.put(TRANSACTIONS_COLUMN_TYPE, tc.getExpenseType());
         contentValues.put(TRANSACTIONS_COLUMN_AMOUNT, tc.getAmount());
-        contentValues.putNull(TRANSACTIONS_COLUMN_TRANSACTIONID);
         db.insert(TRANSACTIONS_TABLE_NAME, null, contentValues);
         return true;
     }
@@ -118,14 +104,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<Account> getAllAccounts()
     {
-        ArrayList<Account> array_list = new ArrayList<Account>();
-
-        //hp = new HashMap();
+        ArrayList<Account> array_list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from "+ACCOUNTS_TABLE_NAME, null );
         res.moveToFirst();
 
-        while(res.isAfterLast() == false){
+        while(!res.isAfterLast()){
             array_list.add(new Account(res.getString(0),res.getString(1),res.getString(2),res.getDouble(3)));
             res.moveToNext();
         }
@@ -134,14 +118,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<Transaction> getAllTransactions()
     {
-        ArrayList<Transaction> array_list = new ArrayList<Transaction>();
-
-        //hp = new HashMap();
+        ArrayList<Transaction> array_list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from "+TRANSACTIONS_TABLE_NAME, null );
         res.moveToFirst();
 
-        while(res.isAfterLast() == false){
+        while(!res.isAfterLast()){
             array_list.add(new Transaction(res.getString(3),res.getString(0),res.getString(1),res.getDouble(2)));
             res.moveToNext();
         }
@@ -150,12 +132,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<String> getAllAccountNumbers()
     {
-        ArrayList<String> array_list = new ArrayList<String>();
+        ArrayList<String> array_list = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select "+ACCOUNTS_COLUMN_ACCNO+" from "+ACCOUNTS_TABLE_NAME+";", null );
         res.moveToFirst();
-        while(res.isAfterLast() == false){
+        while(!res.isAfterLast()){
             array_list.add(res.getString(0));
             res.moveToNext();
         }
@@ -169,7 +151,5 @@ public class DBHelper extends SQLiteOpenHelper {
         res.moveToFirst();
 
         return new Account(res.getString(0),res.getString(1),res.getString(2),res.getDouble(3));
-
-
     }
 }
